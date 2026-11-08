@@ -41,7 +41,24 @@ for y in range(1, height + 1):
         for comb in combs:
             clauses.append([-n for n in comb] + [-current])
 
+        # TODO: add this to the border as well
+        # if !current -> cant have exactly 3 around
+        combs = itertools.combinations(around, 3)
+        for comb in combs:
+            clause = []
+            for a in around:
+                if a in comb:
+                    clause.append(-a)
+                else:
+                    clause.append(a)
+            clause.append(current)
+            clauses.append(clause)
 
+
+#for testing
+for i in [7]:
+    clauses.append([i])
+        
 with open("file.cnf", "w") as file:
     file.write(f"p cnf {literal_count} {len(clauses)}\n")
 
